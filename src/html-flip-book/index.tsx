@@ -7,10 +7,10 @@ import React, {
     useState,
 } from 'react';
 
-import { FlipSetting, PageFlip } from 'page-flip';
-import { IEventProps } from './settings';
+import { PageFlip } from 'page-flip';
+import { IEventProps, IFlipSetting } from './settings';
 
-interface HTMLFlipBookProps extends Partial<FlipSetting>, IEventProps {
+interface HTMLFlipBookProps extends Partial<IFlipSetting>, IEventProps {
     className?: string;
     style?: React.CSSProperties;
     children: React.ReactNode;
