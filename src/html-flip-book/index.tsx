@@ -7,19 +7,15 @@ import React, {
     useState,
 } from 'react';
 
-import { PageFlip } from 'page-flip';
-import { IFlipSetting, IEventProps } from './settings';
+import { FlipSetting, PageFlip } from 'page-flip';
+import { IEventProps } from './settings';
 
-interface IProps extends IFlipSetting, IEventProps {
-    className: string;
-    style: React.CSSProperties;
+interface HTMLFlipBookProps extends Partial<FlipSetting>, IEventProps {
+    className?: string;
+    style?: React.CSSProperties;
     children: React.ReactNode;
     renderOnlyPageLengthChange?: boolean;
 }
-
-type RequiredProps = 'width' | 'height';
-type HTMLFlipBookProps = Partial<Omit<IProps, RequiredProps>> &
-    Required<Pick<IProps, RequiredProps>>;
 
 export type HTMLFlipBookHandle = {
     pageFlip: () => PageFlip | undefined;
@@ -39,7 +35,7 @@ const HTMLFlipBookForward = React.forwardRef<HTMLFlipBookHandle, HTMLFlipBookPro
 
         const refreshOnPageDelete = useCallback(() => {
             if (pageFlip.current) {
-                pageFlip.current.clear();
+                pageFlip.current.destroy();
             }
         }, []);
 
@@ -86,23 +82,23 @@ const HTMLFlipBookForward = React.forwardRef<HTMLFlipBookHandle, HTMLFlipBookPro
 
                 if (flip) {
                     if (props.onFlip) {
-                        flip.on('flip', (e: unknown) => props.onFlip(e));
+                        flip.on('flip', props.onFlip);
                     }
 
                     if (props.onChangeOrientation) {
-                        flip.on('changeOrientation', (e: unknown) => props.onChangeOrientation(e));
+                        flip.on('changeOrientation', props.onChangeOrientation);
                     }
 
                     if (props.onChangeState) {
-                        flip.on('changeState', (e: unknown) => props.onChangeState(e));
+                        flip.on('changeState', props.onChangeState);
                     }
 
                     if (props.onInit) {
-                        flip.on('init', (e: unknown) => props.onInit(e));
+                        flip.on('init', props.onInit);
                     }
 
                     if (props.onUpdate) {
-                        flip.on('update', (e: unknown) => props.onUpdate(e));
+                        flip.on('update', props.onUpdate);
                     }
                 }
             };

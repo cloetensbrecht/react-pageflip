@@ -11,7 +11,7 @@ const HTMLFlipBookForward = React.forwardRef((props, ref) => {
     }));
     const refreshOnPageDelete = useCallback(() => {
         if (pageFlip.current) {
-            pageFlip.current.clear();
+            pageFlip.current.destroy();
         }
     }, []);
     const removeHandlers = useCallback(() => {
@@ -50,19 +50,19 @@ const HTMLFlipBookForward = React.forwardRef((props, ref) => {
             const flip = pageFlip.current;
             if (flip) {
                 if (props.onFlip) {
-                    flip.on('flip', (e) => props.onFlip(e));
+                    flip.on('flip', props.onFlip);
                 }
                 if (props.onChangeOrientation) {
-                    flip.on('changeOrientation', (e) => props.onChangeOrientation(e));
+                    flip.on('changeOrientation', props.onChangeOrientation);
                 }
                 if (props.onChangeState) {
-                    flip.on('changeState', (e) => props.onChangeState(e));
+                    flip.on('changeState', props.onChangeState);
                 }
                 if (props.onInit) {
-                    flip.on('init', (e) => props.onInit(e));
+                    flip.on('init', props.onInit);
                 }
                 if (props.onUpdate) {
-                    flip.on('update', (e) => props.onUpdate(e));
+                    flip.on('update', props.onUpdate);
                 }
             }
         };
