@@ -17,8 +17,16 @@ interface IProps extends IFlipSetting, IEventProps {
     renderOnlyPageLengthChange?: boolean;
 }
 
-const HTMLFlipBookForward = React.forwardRef(
-    (props: IProps, ref: React.MutableRefObject<PageFlip>) => {
+type RequiredProps = 'width' | 'height';
+type HTMLFlipBookProps = Partial<Omit<IProps, RequiredProps>> &
+    Required<Pick<IProps, RequiredProps>>;
+
+export type HTMLFlipBookHandle = {
+    pageFlip: () => PageFlip | undefined;
+};
+
+const HTMLFlipBookForward = React.forwardRef<HTMLFlipBookHandle, HTMLFlipBookProps>(
+    (props: HTMLFlipBookProps, ref: React.Ref<HTMLFlipBookHandle>) => {
         const htmlElementRef = useRef<HTMLDivElement>(null);
         const childRef = useRef<HTMLElement[]>([]);
         const pageFlip = useRef<PageFlip>();
